@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import it.enricocandino.androidmail.model.Attachment;
 import it.enricocandino.androidmail.model.Mail;
@@ -21,6 +22,8 @@ import it.enricocandino.sample.R;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,28 +34,29 @@ public class MainActivity extends AppCompatActivity {
         String filePath = Environment.getExternalStorageDirectory().getPath() +"/file.txt";
         String fileName = "file.txt";
 
-        String email = "test@email.com";
-        MailSender mailSender = new MailSender(email, "");
+        final String email = "spacecraft@homelane.com";
+        final String password = "homelane14";
+        MailSender mailSender = new MailSender(email, password);
 
         Mail.MailBuilder builder = new Mail.MailBuilder();
         Mail mail = builder
                 .setSender(email)
-                .addRecipient(new Recipient(email))
+                .addRecipient(new Recipient("vinay.sh@homelane.com"))
                 .setText("Ciao")
                 .setHtml("<h1 style=\"color:red;\">Ciao</h1>")
-                .addAttachment(new Attachment(filePath, fileName))
+//                .addAttachment(new Attachment(filePath, fileName))
                 .build();
 
-        mailSender.sendMail(mail, new MailSender.OnMailSentListener() {
+        mailSender.sendMailAsync(mail, new MailSender.OnMailSentListener() {
 
             @Override
             public void onSuccess() {
-                System.out.println();
+                Log.d(TAG, "Mail Sent!");
             }
 
             @Override
             public void onError(Exception error) {
-                System.out.println();
+                Log.e(TAG, "Error sending mail!", error);
             }
         });
     }
