@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 .addRecipient(new Recipient("vinay.sh@homelane.com"))
                 .setText("Ciao")
                 .setHtml("<h1 style=\"color:red;\">Ciao</h1>")
-//                .addAttachment(new Attachment(filePath, fileName))
+                .addAttachment(new Attachment(filePath, fileName))
                 .build();
 
         mailSender.sendMailAsync(mail, new MailSender.OnMailSentListener() {
